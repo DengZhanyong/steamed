@@ -1,7 +1,7 @@
 {
   "name": "@steamed/utils",
   "version": "0.0.1-alpha.0",
-  "description": "> TODO: description",
+  "description": "steamed 工具方法包",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
   "license": "ISC",

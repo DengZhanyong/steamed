@@ -1,7 +1,7 @@
 {
   "name": "@steamed/exec",
   "version": "0.0.1-alpha.1",
-  "description": "> TODO: description",
+  "description": "steamed 命令执行",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
   "license": "ISC",
@@ -21,9 +21,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/log": "^0.0.1-alpha.1",
-    "@steamed/package": "^0.0.1-alpha.1",
-    "@steamed/utils": "^0.0.1-alpha.0"
+    "@steamed/log": "file:../../utils/log",
+    "@steamed/package": "file:../../models/package",
+    "@steamed/utils": "file:../../utils/utils"
   },
   "gitHead": "cd0db94906ba650c7db3680edc6a9f4104f68b8c"
 }

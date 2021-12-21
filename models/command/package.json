@@ -1,7 +1,7 @@
 {
   "name": "@steamed/command",
   "version": "0.0.1-alpha.1",
-  "description": "> TODO: description",
+  "description": "steamed Command 类",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
   "license": "ISC",
@@ -21,8 +21,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/get-npm-info": "^0.0.1-alpha.0",
-    "@steamed/log": "^0.0.1-alpha.1",
+    "@steamed/get-npm-info": "file:../../utils/get-npm-info",
+    "@steamed/log": "file:../../utils/log",
     "colors": "^1.4.0",
     "semver": "^7.3.5"
   },

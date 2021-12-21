@@ -1,7 +1,7 @@
 {
   "name": "@steamed/init",
   "version": "0.0.1-alpha.1",
-  "description": "> TODO: description",
+  "description": "steamed 初始化命令",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
   "license": "ISC",
@@ -21,10 +21,10 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/command": "^0.0.1-alpha.1",
-    "@steamed/log": "^0.0.1-alpha.1",
-    "@steamed/package": "^0.0.1-alpha.1",
-    "@steamed/request": "^0.0.1-alpha.0",
+    "@steamed/command": "file:../../models/command",
+    "@steamed/log": "file:../../utils/log",
+    "@steamed/package": "file:../../models/package",
+    "@steamed/request": "file:../../utils/request",
     "fs-extra": "^10.0.0",
     "inquirer": "^8.2.0",
     "semver": "^7.3.5"

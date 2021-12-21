@@ -1,7 +1,7 @@
 {
   "name": "@steamed/request",
   "version": "0.0.1-alpha.0",
-  "description": "> TODO: description",
+  "description": "steamed 请求封装",
   "author": "dengzhanyong <10077045+dengzhanyong@user.noreply.gitee.com>",
   "homepage": "https://github.com/DengZhanyong/steamed#readme",
   "license": "ISC",
