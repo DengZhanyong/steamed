@@ -1,6 +1,6 @@
 {
   "name": "@steamed/command",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "> TODO: description",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@steamed/get-npm-info": "^0.0.1-alpha.0",
-    "@steamed/log": "^0.0.1-alpha.0",
+    "@steamed/log": "^0.0.1-alpha.1",
     "colors": "^1.4.0",
     "semver": "^7.3.5"
   },
