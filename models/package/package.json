@@ -1,6 +1,6 @@
 {
   "name": "@steamed/package",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "> TODO: description",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
@@ -21,9 +21,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/get-npm-info": "^0.0.0",
-    "@steamed/log": "^0.0.0",
-    "@steamed/utils": "^0.0.0",
+    "@steamed/get-npm-info": "^0.0.1-alpha.0",
+    "@steamed/log": "^0.0.1-alpha.0",
+    "@steamed/utils": "^0.0.1-alpha.0",
     "fs-extra": "^10.0.0",
     "npminstall": "^5.3.1",
     "pkg-dir": "^5.0.0"

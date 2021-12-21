@@ -1,6 +1,6 @@
 {
   "name": "@steamed/exec",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "> TODO: description",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
@@ -21,9 +21,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/log": "^0.0.0",
-    "@steamed/package": "^0.0.0",
-    "@steamed/utils": "^0.0.0"
+    "@steamed/log": "^0.0.1-alpha.0",
+    "@steamed/package": "^0.0.1-alpha.0",
+    "@steamed/utils": "^0.0.1-alpha.0"
   },
   "gitHead": "cd0db94906ba650c7db3680edc6a9f4104f68b8c"
 }

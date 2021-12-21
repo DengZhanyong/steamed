@@ -1,6 +1,6 @@
 {
   "name": "@steamed/cli",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "> TODO: description",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
@@ -24,9 +24,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/exec": "^0.0.0",
-    "@steamed/get-npm-info": "^0.0.0",
-    "@steamed/log": "^0.0.0",
+    "@steamed/exec": "^0.0.1-alpha.0",
+    "@steamed/get-npm-info": "^0.0.1-alpha.0",
+    "@steamed/log": "^0.0.1-alpha.0",
     "colors": "^1.4.0",
     "commander": "^8.3.0",
     "dotenv": "^10.0.0",

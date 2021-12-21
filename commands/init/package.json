@@ -1,6 +1,6 @@
 {
   "name": "@steamed/init",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "> TODO: description",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
@@ -21,10 +21,10 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@steamed/command": "^0.0.0",
-    "@steamed/log": "^0.0.0",
-    "@steamed/package": "^0.0.0",
-    "@steamed/request": "^0.0.0",
+    "@steamed/command": "^0.0.1-alpha.0",
+    "@steamed/log": "^0.0.1-alpha.0",
+    "@steamed/package": "^0.0.1-alpha.0",
+    "@steamed/request": "^0.0.1-alpha.0",
     "fs-extra": "^10.0.0",
     "inquirer": "^8.2.0",
     "semver": "^7.3.5"
