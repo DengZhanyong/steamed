@@ -2,7 +2,7 @@
   "name": "@steamed/request",
   "version": "0.0.1-alpha.2",
   "description": "steamed 请求封装",
-  "author": "dengzhanyong <10077045+dengzhanyong@user.noreply.gitee.com>",
+  "author": "dengzhanyong <2657179843@qq/com>",
   "homepage": "https://github.com/DengZhanyong/steamed#readme",
   "license": "ISC",
   "main": "lib/index.js",
