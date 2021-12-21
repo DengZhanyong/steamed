@@ -1,6 +1,6 @@
 {
   "name": "@steamed/get-npm-info",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.2",
   "description": "steamed 获取npm信息方法集合",
   "author": "DengZhanyong <2657179843@qq/com>",
   "homepage": "",
