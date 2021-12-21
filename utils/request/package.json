@@ -13,6 +13,10 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DengZhanyong/steamed.git"
@@ -26,5 +30,5 @@
   "dependencies": {
     "axios": "^0.24.0"
   },
-  "gitHead": "cd0db94906ba650c7db3680edc6a9f4104f68b8c"
+  "gitHead": "e7248b0b113a79a9986c3eef4eafa8fa15f186ab"
 }
