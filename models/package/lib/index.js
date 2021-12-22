@@ -2,8 +2,8 @@
 
 const path = require('path');
 const fs = require('fs');
-const fse = require('fs-extra');
 const npmInstall = require('npminstall');
+const fse = require('fs-extra');
 const pkgDir = require('pkg-dir');
 const log = require('@steamed/log');
 const { isObject, formatPath } = require('@steamed/utils');
@@ -18,7 +18,7 @@ class Package {
             throw new Error('参数应该是一个对象');
         }
         this.targetPath = props.targetPath;  // 本地路径
-        this.storePath = props.storePath;  // 缓存路径
+        this.storeDir = props.storeDir;  // 缓存路径
         this.packageName = props.packageName;  // 包名
         this.packageVersion = props.packageVersion;  // 版本
         this.cacheFilePathPrefix = this.packageName.replace('/', '_');
@@ -26,11 +26,18 @@ class Package {
 
     // 获取缓路径
     get cacheFilePath() {
-        return path.resolve(this.storePath, `_${this.cacheFilePathPrefix}@${this.packageVersion}@${this.packageName}`);
+        return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${this.packageVersion}@${this.packageName}`);
+    }
+
+    getSpecificCacheFilePath (packageVersion) {
+        return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${packageVersion}@${this.packageName}`);
     }
 
     // 准备
     async prepare() {
+        if (this.storeDir && !fs.existsSync(this.storeDir)) {
+            fse.mkdirpSync(this.storeDir);
+        }
         if (this.packageVersion === 'latest') {
             this.packageVersion = await getLatestVersion(this.packageName);
         }
@@ -38,7 +45,7 @@ class Package {
 
     // 判断缓存中是否存在
     async exists() {
-        if (this.storePath) {
+        if (this.storeDir) {
             await this.prepare();
             return fs.existsSync(this.cacheFilePath);
         } else {
@@ -49,9 +56,9 @@ class Package {
     // 安装
     async install() {
         await this.prepare();
-        npmInstall({
+        await npmInstall({
             root: this.targetPath,
-            storeDir: this.storePath,
+            storeDir: this.storeDir,
             registry: getDefaultRegistry(),
             pkgs: [{
                 name: this.packageName,
@@ -63,27 +70,40 @@ class Package {
     // 更新
     async update() {
         await this.prepare();
-        // todo
-    }
-
-    // 复制
-    copy() {
-        console.log(this.cacheFilePath);
-        fse.copyFileSync(this.cacheFilePath, process.cwd());
+        // 1. 获取到最新版本
+        const latestPackageVersion = await getLatestVersion(this.packageName);
+        // 2. 判断缓存中是否存在最新版本
+        const latestPackagePath = this.getSpecificCacheFilePath(latestPackageVersion);
+        log.verbose('latestPackagePath', latestPackageVersion);
+        // 3. 如果不存在，需要更新下载
+        if (!fs.existsSync(latestPackagePath)) {
+            log.verbose('update', 'command package');
+            await npmInstall({
+                root: this.targetPath,
+                storeDir: this.storeDir,
+                registry: getDefaultRegistry(),
+                pkgs: [{
+                    name: this.packageName,
+                    version: latestPackageVersion
+                }]
+            });
+        }
+        this.packageVersion = latestPackageVersion;
     }
 
     // 获取到执行文件路径
     getRootFilePath() {
-        if (!this.storePath) {
-            const dir = pkgDir.sync(this.targetPath);
-            const pkgFile = require(path.resolve(dir, 'package.json'))
-            if (pkgFile && pkgFile.main) {
-                return formatPath(path.resolve(dir, pkgFile.main));
+        function _getRootFile(targetPath) {
+            const dir = pkgDir.sync(targetPath);
+            if (dir) {
+                const pkgFile = require(path.resolve(dir, 'package.json'))
+                if (pkgFile && pkgFile.main) {
+                    return formatPath(path.resolve(dir, pkgFile.main));
+                }
             }
             return null;
-        } else {
-            // todo
         }
+        _getRootFile(this.storeDir || this.targetPath);
     }
 }
 

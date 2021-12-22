@@ -11,12 +11,12 @@ const log = require('@steamed/log');
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
-const CACHE_DIR = 'templates/';
+const CACHE_DIR = 'templates';
 class InitCommand extends Command {
     
     init() {
         this.projectName = this._argv[0] || null;
-        const { force } = this._cmd.opts();
+        const { force = false } = this._cmd.opts();
         this.force = force;
         log.verbose('projectName [force]', this.projectName , this.force);
     }
@@ -47,13 +47,14 @@ class InitCommand extends Command {
         // 2. 创建一个package类
         const homePath = process.env.STEAMED_CLI_HOME_PATH;
         const targetPath = path.resolve(homePath, CACHE_DIR);
-        const storePath = path.resolve(targetPath, 'node_modules');;
+        const storeDir = path.resolve(targetPath, 'node_modules');;
         const pkg = new Package({
             targetPath,
-            storePath,
+            storeDir,
             packageName: tempInfo.packageName,
             packageVersion: tempInfo.version
         });
+        this.templateNpm = pkg;
         // 3. 判断缓存中的模板是否为最新版本(如果不是最新版本，需要更新)
         if (await pkg.exists()) {
             // 更新
@@ -63,7 +64,20 @@ class InitCommand extends Command {
             await pkg.install();
         }
         // 4. 将缓存中的模板复制到当前目录下
-        pkg.copy();
+        this.installNormalTemp();
+    }
+
+    // 安装普通模板
+    installNormalTemp() {
+        const cacheFilePath = path.resolve(this.templateNpm.cacheFilePath, 'template');
+        const currentPath = process.cwd();
+
+        log.verbose('tempCacheFilePath', cacheFilePath);
+        log.verbose('currentPath', currentPath);
+
+        fes.ensureDirSync(cacheFilePath);
+        fes.ensureDirSync(currentPath);
+        fes.copySync(cacheFilePath, currentPath);
     }
 
     async prepare() {
@@ -191,8 +205,3 @@ function init(argv) {
 
 module.exports = init;
 module.exports.InitCommand = InitCommand;
-
-// function init() {
-//     console.log('初始化项目');
-//     // console.log(arguments);
-// }

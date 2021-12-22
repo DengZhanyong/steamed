@@ -5,7 +5,7 @@ const log = require('@steamed/log');
 const Package = require('@steamed/package');
 
 const commandMap = {
-    'init': '@imooc-cli/init'
+    'init': '@steamed/init'
 }
 
 const CACHE_DIR = 'dependencies/';
@@ -18,32 +18,28 @@ async function exec() {
         const homePath = process.env.STEAMED_CLI_HOME_PATH;
         const packageName = commandMap[command];
         const packageVersion = 'latest';
-        let storePath = '';
+        let storeDir = '';
 
         if (!targetPath) {
             targetPath = path.resolve(homePath, CACHE_DIR);
-            storePath = path.resolve(targetPath, 'node_modules');;
+            storeDir = path.resolve(targetPath, 'node_modules');;
         }
 
         log.verbose('targetPath', targetPath);
-        log.verbose('storePath', storePath);
+        log.verbose('storeDir', storeDir);
 
         let pkg;
-        if (storePath) {
+        if (storeDir) {
             pkg = new Package({
                 targetPath,
-                storePath,
+                storeDir,
                 packageName,
                 packageVersion
             });
     
             if (await pkg.exists()) {
-                log.verbose('更新');
-                // 更新
                 await pkg.update();
             } else {
-                // 安装
-                log.verbose('安装');
                 await pkg.install();
             }
         } else {
