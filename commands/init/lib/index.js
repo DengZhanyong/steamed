@@ -5,7 +5,7 @@ const inquirer = require('inquirer');
 const semver = require('semver');
 const fes = require('fs-extra');
 const Command = require('@steamed/command');
-const Package = require('@models/package');
+const Package = require('@steamed/package');
 const request = require('@steamed/request');
 const log = require('@steamed/log');
 
