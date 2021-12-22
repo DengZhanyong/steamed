@@ -73,8 +73,9 @@ class Package {
         // 1. 获取到最新版本
         const latestPackageVersion = await getLatestVersion(this.packageName);
         // 2. 判断缓存中是否存在最新版本
+        log.verbose('latestPackageVersion', latestPackageVersion);
         const latestPackagePath = this.getSpecificCacheFilePath(latestPackageVersion);
-        log.verbose('latestPackagePath', latestPackageVersion);
+        log.verbose('latestPackagePath', latestPackagePath);
         // 3. 如果不存在，需要更新下载
         if (!fs.existsSync(latestPackagePath)) {
             log.verbose('update', 'command package');
@@ -103,7 +104,7 @@ class Package {
             }
             return null;
         }
-        _getRootFile(this.storeDir || this.targetPath);
+        return _getRootFile(this.storeDir ? this.cacheFilePath : this.targetPath);
     }
 }
 
