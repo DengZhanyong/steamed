@@ -10,7 +10,11 @@ const log = require('@steamed/log');
 const exec = require('@steamed/exec');
 const { getLatestVersion } = require('@steamed/get-npm-info');
 const pkg = require('../package.json');
-const { LOWEST_NODE_VERSION, STEAMED_CLI_HOME_PATH } = require('./constant');
+const {
+    LOWEST_NODE_VERSION,
+    STEAMED_CLI_HOME_PATH,
+    STEAMED_CLI_LOG_LEVEL
+} = require('./constant');
 
 async function index() {
     try {
@@ -27,10 +31,10 @@ async function index() {
 // 准备阶段
 async function prepare() {
     checkPkgVersion();
-    // checkNodeVersion();
+    checkNodeVersion();
     checkUserHome();
     checkEnv();
-    // await checkCliUpdate();
+    await checkCliUpdate();
 }
 
 // 注册命令
@@ -55,7 +59,7 @@ function registryCommand() {
         if (debug) {
             log.level = 'verbose';
         } else {
-            log.level = 'info';
+            log.level = STEAMED_CLI_LOG_LEVEL;
         }
         process.env.LOG_LEVEL = log.level;
     });
@@ -75,7 +79,6 @@ function registryCommand() {
     } else {
         program.parse(process.argv);
     }
-    
 }
 
 // 检查当前版本

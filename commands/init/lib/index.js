@@ -1,9 +1,12 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const inquirer = require('inquirer');
 const semver = require('semver');
 const fes = require('fs-extra');
+const ejs = require('ejs');
+const glob = require('glob');
 const Command = require('@steamed/command');
 const Package = require('@steamed/package');
 const request = require('@steamed/request');
@@ -25,7 +28,7 @@ class InitCommand extends Command {
         try {
             const projectInfo = await this.prepare();
             if (projectInfo) {
-                console.log(projectInfo);
+                this.projectInfo = projectInfo;
                 // 2. 下载模板
                 await this.downloadTemplate(projectInfo);
                 // 3. 安装模板
@@ -44,6 +47,7 @@ class InitCommand extends Command {
         if (!tempInfo) {
             throw new Error('未获取到模板信息');
         }
+        this.tempInfo = tempInfo;
         // 2. 创建一个package类
         const homePath = process.env.STEAMED_CLI_HOME_PATH;
         const targetPath = path.resolve(homePath, CACHE_DIR);
@@ -57,14 +61,60 @@ class InitCommand extends Command {
         this.templateNpm = pkg;
         // 3. 判断缓存中的模板是否为最新版本(如果不是最新版本，需要更新)
         if (await pkg.exists()) {
-            // 更新
             await pkg.update();
         } else {
-            // 安装
             await pkg.install();
         }
         // 4. 将缓存中的模板复制到当前目录下
         this.installNormalTemp();
+        // 5. ejs渲染模板信息
+        await this.ejsRender();
+    }
+
+    // 设置模板信息
+    ejsRender() {
+        console.log(this.projectInfo);
+        console.log(this.tempInfo);
+        const { projectName, version, description } = this.projectInfo;
+        const dataInfo = {
+            projectName,
+            version,
+            description: description || this.tempInfo.description
+        };
+        return new Promise((resolve, reject) => {
+            const dir = process.cwd();
+            glob("**", {
+                cwd: dir,
+                ignore: ['src/**']
+            }, (err, files)  => {
+                if (err) {
+                    reject(err);
+                }
+                Promise.all(files.map(file => {
+                    const filePath = path.join(dir, file);
+                    fs.stat(filePath, (err, data) => {
+                        if (data.isFile()) {
+                            return new Promise((resolve1, reject1) => {
+                                ejs.renderFile(filePath, dataInfo, {}, function(err, result) {
+                                    if (err) {
+                                        reject1(err)
+                                    } else {
+                                        resolve1(result);
+                                        fes.writeFileSync(filePath, result);
+                                    }
+                                })
+                            })
+                        }
+                    })
+                    
+                })).then((result) => {
+                    resolve();
+                }).catch(err => {
+                    console.log(err);
+                    reject(err);
+                })
+            })
+        })
     }
 
     // 安装普通模板
