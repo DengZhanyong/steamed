@@ -69,9 +69,9 @@ function registryCommand() {
         targetPath && (process.env.STEAMED_ALI_TARGET_PATH = targetPath);
     });
 
-    // program.on('command:*', (obj) => {
-    //     console.log(obj);
-    // });
+    program.on('command:*', (obj) => {
+        console.log(obj);
+    });
 
     program.showHelpAfterError("命令不存在");
 
