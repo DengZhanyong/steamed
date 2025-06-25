@@ -52,7 +52,7 @@ function registryCommand() {
         .description('初始化项目')
         .option('-f, --force', '是否强制初始化项目')
         .action(exec);
-    
+
     // 开启debug监听
     program.on('option:debug', () => {
         const { debug } = program.opts();
@@ -73,7 +73,9 @@ function registryCommand() {
     //     console.log(obj);
     // });
 
-    
+    program.showHelpAfterError("命令不存在");
+
+
     if (process.argv.length < 3) {
         program.outputHelp();
     } else {
